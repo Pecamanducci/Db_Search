@@ -18,7 +18,44 @@
 
     <div class="card p-4 shadow">
       <form id="empresaForm">
-        <!-- Aqui vão os campos do formulário -->
+        <div class="mb-3">
+          <label for="name" class="form-label">Nome da Empresa</label>
+          <input type="text" class="form-control" id="name" required>
+        </div>
+        <div class="mb-3">
+          <label for="valuationDcf" class="form-label">Valuation (DCF)</label>
+          <input type="number" class="form-control" id="valuationDcf" required>
+        </div>
+        <div class="mb-3">
+          <label for="valuationMultiplo" class="form-label">Valuation (Múltiplos)</label>
+          <input type="number" class="form-control" id="valuationMultiplo" required>
+        </div>
+        <div class="mb-3">
+          <label for="receita" class="form-label">Receita Anual (R$)</label>
+          <input type="number" class="form-control" id="receita" required>
+        </div>
+        <div class="mb-3">
+          <label for="risco" class="form-label">Risco Estratégico</label>
+          <textarea class="form-control" id="risco" rows="2" required></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="insight" class="form-label">Insight Estratégico</label>
+          <textarea class="form-control" id="insight" rows="2" required></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="rating" class="form-label">Rating (0–100)</label>
+          <input type="number" class="form-control" id="rating" required>
+        </div>
+        <div class="mb-3">
+          <label for="approval" class="form-label">Approval</label>
+          <select class="form-select" id="approval" required>
+            <option value="">Selecione</option>
+            <option value="Aprovado">Aprovado</option>
+            <option value="Em Avaliação">Em Avaliação</option>
+            <option value="Não Aprovado">Não Aprovado</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Cadastrar Empresa</button>
       </form>
     </div>
   </div>
