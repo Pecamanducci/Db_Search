@@ -1,7 +1,13 @@
 const airtableEndpoint = "https://api.airtable.com/v0/appvccdvUXFaSh6lt/tblB2rXgUbs7VGk6t/";
 const airtableKey = "pat0R6DNyQDDP4fTv.05e3b1af7fc6dcc16dabcccaf9f0fdd45f3c5c5ade3c0bfbd2ded2b9e9b26362";
+
 document.getElementById("empresaForm").addEventListener("submit", async function (e) {
   e.preventDefault();
+  const ratingValue = parseInt(document.getElementById("rating").value);
+  let approval = "Não Aprovado";
+  if (ratingValue >= 80) approval = "Aprovado";
+  else if (ratingValue >= 60) approval = "Em Avaliação";
+
   const data = {
     records: [{
       fields: {
@@ -15,11 +21,12 @@ document.getElementById("empresaForm").addEventListener("submit", async function
         "Churn": parseFloat(document.getElementById("churn").value),
         "Risco Estratégico": document.getElementById("riscoEstrategico").value,
         "Insight Estratégico": document.getElementById("insightEstrategico").value,
-        Rating: parseInt(document.getElementById("rating").value),
-        Approval: document.getElementById("approval").value
+        Rating: ratingValue,
+        Approval: approval
       }
     }]
   };
+
   try {
     const response = await fetch(airtableEndpoint, {
       method: "POST",
