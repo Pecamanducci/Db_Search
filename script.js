@@ -1,27 +1,42 @@
+
 const airtableEndpoint = "https://api.airtable.com/v0/appvccdvUXFaSh6lt/tblB2rXgUbs7VGk6t/";
 const airtableKey = "pat0R6DNyQDDP4fTv.05e3b1af7fc6dcc16dabcccaf9f0fdd45f3c5c5ade3c0bfbd2ded2b9e9b26362";
 
 document.getElementById("empresaForm").addEventListener("submit", async function (e) {
   e.preventDefault();
-  const ratingValue = parseInt(document.getElementById("rating").value);
+
+  const name = document.getElementById("name").value;
+  const valuationDcf = parseFloat(document.getElementById("valuationDcf").value);
+  const valuationMultiplo = parseFloat(document.getElementById("valuationMultiplo").value);
+  const receitaAnual = parseFloat(document.getElementById("receitaAnual").value);
+  const margemEbitda = parseFloat(document.getElementById("margemEbitda").value);
+  const margemLiquida = parseFloat(document.getElementById("margemLiquida").value);
+  const crescimento = parseFloat(document.getElementById("crescimentoReceita").value);
+  const churn = parseFloat(document.getElementById("churn").value);
+  const risco = parseFloat(document.getElementById("risco").value);
+  const insight = parseFloat(document.getElementById("insight").value);
+
+  let rating = (margemEbitda * 0.2) + (margemLiquida * 0.1) + (crescimento * 0.2) + ((100 - churn) * 0.1) + (risco * 0.2) + (insight * 0.2);
+  rating = Math.min(100, Math.max(0, Math.round(rating)));
+
   let approval = "Não Aprovado";
-  if (ratingValue >= 80) approval = "Aprovado";
-  else if (ratingValue >= 60) approval = "Em Avaliação";
+  if (rating >= 80) approval = "Aprovado";
+  else if (rating >= 60) approval = "Em Avaliação";
 
   const data = {
     records: [{
       fields: {
-        Name: document.getElementById("name").value,
-        "Valuation (DCF)": parseFloat(document.getElementById("valuationDcf").value),
-        "Valuation (Múltiplos)": parseFloat(document.getElementById("valuationMultiplo").value),
-        "Receita Anual": parseFloat(document.getElementById("receitaAnual").value),
-        "Margem EBITDA (%)": parseFloat(document.getElementById("margemEbitda").value),
-        "Margem Líquida (%)": parseFloat(document.getElementById("margemLiquida").value),
-        "Crescimento Receita (%)": parseFloat(document.getElementById("crescimentoReceita").value),
-        "Churn": parseFloat(document.getElementById("churn").value),
-        "Risco Estratégico": document.getElementById("riscoEstrategico").value,
-        "Insight Estratégico": document.getElementById("insightEstrategico").value,
-        Rating: ratingValue,
+        Name: name,
+        "Valuation (DCF)": valuationDcf,
+        "Valuation (Múltiplos)": valuationMultiplo,
+        "Receita Anual": receitaAnual,
+        "Margem EBITDA (%)": margemEbitda,
+        "Margem Líquida (%)": margemLiquida,
+        "Crescimento Receita (%)": crescimento,
+        "Churn": churn,
+        "Risco Estratégico": risco,
+        "Insight Estratégico": insight,
+        Rating: rating,
         Approval: approval
       }
     }]
@@ -32,9 +47,9 @@ document.getElementById("empresaForm").addEventListener("submit", async function
       method: "POST",
       headers: {
         Authorization: `Bearer ${airtableKey}`,
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     });
     if (!response.ok) throw new Error("Erro ao cadastrar.");
     alert("Empresa cadastrada com sucesso!");
@@ -48,16 +63,17 @@ document.getElementById("empresaForm").addEventListener("submit", async function
 async function loadEmpresas() {
   try {
     const response = await fetch(airtableEndpoint, {
-      headers: { Authorization: `Bearer ${airtableKey}` },
+      headers: { Authorization: `Bearer ${airtableKey}` }
     });
     const data = await response.json();
     const tableBody = document.getElementById("empresasTableBody");
     tableBody.innerHTML = "";
     data.records.forEach((record) => {
-      const rating = record.fields.Rating || 0;
+      const f = record.fields;
+      const rating = f.Rating || 0;
       let scoreInvestimento = rating >= 80 ? "Alta Viabilidade" : rating >= 60 ? "Média Viabilidade" : "Baixa Viabilidade";
       const row = document.createElement("tr");
-      row.innerHTML = `<td>${record.fields.Name || ""}</td><td>${record.fields["Valuation (DCF)"] || ""}</td><td>${record.fields["Valuation (Múltiplos)"] || ""}</td><td>${record.fields["Receita Anual"] || ""}</td><td>${record.fields["Margem EBITDA (%)"] || ""}</td><td>${record.fields["Margem Líquida (%)"] || ""}</td><td>${record.fields["Crescimento Receita (%)"] || ""}</td><td>${record.fields.Churn || ""}</td><td>${rating}</td><td>${record.fields.Approval || ""}</td><td><strong>${scoreInvestimento}</strong></td>`;
+      row.innerHTML = `<td>${f.Name || ""}</td><td>${f["Valuation (DCF)"] || ""}</td><td>${f["Valuation (Múltiplos)"] || ""}</td><td>${f["Receita Anual"] || ""}</td><td>${f["Margem EBITDA (%)"] || ""}</td><td>${f["Margem Líquida (%)"] || ""}</td><td>${f["Crescimento Receita (%)"] || ""}</td><td>${f["Churn"] || ""}</td><td>${rating}</td><td>${f.Approval || ""}</td><td><strong>${scoreInvestimento}</strong></td>`;
       tableBody.appendChild(row);
     });
   } catch (err) {
