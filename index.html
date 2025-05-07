@@ -1,31 +1,34 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Cadastro de Due Diligence</title>
-    <link rel="stylesheet" href="styles.css"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cadastro de Due Diligence</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-    <div class="container">
-        <h1>Cadastro de Due Diligence</h1>
-        <form id="dueForm">
-            <input type="text" placeholder="Empresa" id="empresa" required />
-            <select id="tipoDd">
-                <option value="Legal">Legal</option>
-                <option value="Financeira">Financeira</option>
-            </select>
-            <textarea placeholder="Item Avaliado" id="itemAvaliado"></textarea>
-            <select id="status">
-                <option value="Em Progresso">Em Progresso</option>
-                <option value="Concluído">Concluído</option>
-            </select>
-            <input type="number" placeholder="Risco (0 a 100)" id="risco" min="0" max="100" />
-            <input type="number" placeholder="Insight Estratégico (0 a 100)" id="insight" min="0" max="100" />
-            <input type="file" id="documento" />
-            <button type="submit">Cadastrar Item</button>
-        </form>
-    </div>
-    <script src="script.js"></script>
+  <div class="form-container">
+    <h1>Cadastro de Due Diligence</h1>
+    <form id="dueDiligenceForm">
+      <input type="text" id="empresa" placeholder="Empresa" required/>
+      <select id="tipoDD" required>
+        <option value="Legal">Legal</option>
+        <option value="Financeira">Financeira</option>
+        <option value="Operacional">Operacional</option>
+      </select>
+      <textarea id="itemAvaliado" placeholder="Item Avaliado" required></textarea>
+      <select id="status" required>
+        <option value="Em Progresso">Em Progresso</option>
+        <option value="Concluído">Concluído</option>
+        <option value="Pendente">Pendente</option>
+      </select>
+      <input type="number" id="risco" placeholder="Risco (0 a 100)" min="0" max="100" required/>
+      <input type="number" id="insight" placeholder="Insight Estratégico (0 a 100)" min="0" max="100" required/>
+      <input type="file" id="documento"/>
+      <button type="submit">Cadastrar Item</button>
+    </form>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>
