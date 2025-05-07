@@ -1,40 +1,37 @@
 
 document.addEventListener("DOMContentLoaded", function () {
-    const data = [
-        {
-            nome: "Agilysys", dcf: "$700M", mult: "$750M", receita: "$237M",
-            ebitda: "21%", liquida: "6%", crescimento: "4%", churn: "10%",
-            risco: "86", insight: "88", rating: "86", approval: "Aprovado"
-        },
-        {
-            nome: "Alkami", dcf: "$600M", mult: "$580M", receita: "$200M",
-            ebitda: "-3%", liquida: "-24%", crescimento: "7%", churn: "12%",
-            risco: "72", insight: "78", rating: "72", approval: "Em Avaliação"
-        },
-        {
-            nome: "CS Disco", dcf: "$400M", mult: "$420M", receita: "$133M",
-            ebitda: "-12%", liquida: "-68%", crescimento: "2%", churn: "20%",
-            risco: "58", insight: "67", rating: "43", approval: "Não Aprovado"
-        }
-    ];
+    const API_KEY = "pat0R6DNyQDDP4fTv.05e3b1af7fc6dcc16dabcccaf9f0fdd45f3c5c5ade3c0bfbd2ded2b9e9b26362";
+    const BASE_ID = "appvccdvUXFaSh6lt";
+    const TABLE_NAME = "Db_Search";
+    const url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}`;
 
-    const tbody = document.querySelector("#empresas-table tbody");
-    data.forEach(emp => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-            <td>${emp.nome}</td>
-            <td>${emp.dcf}</td>
-            <td>${emp.mult}</td>
-            <td>${emp.receita}</td>
-            <td>${emp.ebitda}</td>
-            <td>${emp.liquida}</td>
-            <td>${emp.crescimento}</td>
-            <td>${emp.churn}</td>
-            <td>${emp.risco}</td>
-            <td>${emp.insight}</td>
-            <td>${emp.rating}</td>
-            <td>${emp.approval}</td>
-        `;
-        tbody.appendChild(row);
-    });
+    fetch(url, {
+        headers: {
+            Authorization: `Bearer ${API_KEY}`
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        const tbody = document.querySelector("#empresas-table tbody");
+        data.records.forEach(record => {
+            const f = record.fields;
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${f.Name || ''}</td>
+                <td>${f["Valuation (DCF)"] || ''}</td>
+                <td>${f["Valuation (Múltiplos)"] || ''}</td>
+                <td>${f["Receita Anual"] || ''}</td>
+                <td>${f["Margem EBITDA (%)"] || ''}</td>
+                <td>${f["Margem Líquida (%)"] || ''}</td>
+                <td>${f["Crescimento Receita (%)"] || ''}</td>
+                <td>${f["Churn (%)"] || ''}</td>
+                <td>${f["Risco Estratégico"] || ''}</td>
+                <td>${f["Insight Estratégico"] || ''}</td>
+                <td>${f["Rating"] || ''}</td>
+                <td>${f["Approval"] || ''}</td>
+            `;
+            tbody.appendChild(row);
+        });
+    })
+    .catch(error => console.error("Erro ao buscar dados:", error));
 });
