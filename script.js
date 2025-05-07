@@ -1,54 +1,37 @@
 
-document.getElementById("ddForm").addEventListener("submit", async function (e) {
-  e.preventDefault();
+document.addEventListener("DOMContentLoaded", function () {
+    const API_KEY = "pat0R6DNyQDDP4fTv.05e3b1af7fc6dcc16dabcccaf9f0fdd45f3c5c5ade3c0bfbd2ded2b9e9b26362";
+    const BASE_ID = "appvccdvUXFaSh6lt";
+    const TABLE_NAME = "Db_Search";
+    const url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}`;
 
-  const empresa = document.getElementById("empresa").value;
-  const tipoDD = document.getElementById("tipoDD").value;
-  const item = document.getElementById("item").value;
-  const status = document.getElementById("status").value;
-  const risco = parseInt(document.getElementById("risco").value);
-  const insight = parseInt(document.getElementById("insight").value);
-  const documento = document.getElementById("documento").value;
-
-  const rating = (risco + insight) / 2;
-  let approval = "Não Aprovado";
-  if (rating >= 80) approval = "Aprovado";
-  else if (rating >= 60) approval = "Em Avaliação";
-
-  const data = {
-    records: [
-      {
-        fields: {
-          Empresa: empresa,
-          "Tipo de DD": tipoDD,
-          Item: item,
-          Status: status,
-          Risco: risco,
-          "Insight Estratégico": insight,
-          Rating: rating,
-          Approval: approval,
-          Documento: [{ url: documento }],
-          "Data de Registro": new Date().toISOString()
+    fetch(url, {
+        headers: {
+            Authorization: `Bearer ${API_KEY}`
         }
-      }
-    ]
-  };
-
-  try {
-    const response = await fetch("https://api.airtable.com/v0/appvccdvUXFaSh6lt/tblsjtXFF6GfS8WYY", {
-      method: "POST",
-      headers: {
-        Authorization: "Bearer pat0R6DNyQDDP4fTv.05e3b1af7fc6dcc16dabcccaf9f0fdd45f3c5c5ade3c0bfbd2ded2b9e9b26362",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-
-    if (!response.ok) throw new Error("Erro ao cadastrar.");
-
-    alert("Item de Due Diligence cadastrado com sucesso!");
-    document.getElementById("ddForm").reset();
-  } catch (err) {
-    alert("Erro ao cadastrar: " + err.message);
-  }
+    })
+    .then(response => response.json())
+    .then(data => {
+        const tbody = document.querySelector("#empresas-table tbody");
+        data.records.forEach(record => {
+            const f = record.fields;
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${f.Name || ''}</td>
+                <td>${f["Valuation (DCF)"] || ''}</td>
+                <td>${f["Valuation (Múltiplos)"] || ''}</td>
+                <td>${f["Receita Anual"] || ''}</td>
+                <td>${f["Margem EBITDA (%)"] || ''}</td>
+                <td>${f["Margem Líquida (%)"] || ''}</td>
+                <td>${f["Crescimento Receita (%)"] || ''}</td>
+                <td>${f["Churn (%)"] || ''}</td>
+                <td>${f["Risco Estratégico"] || ''}</td>
+                <td>${f["Insight Estratégico"] || ''}</td>
+                <td>${f["Rating"] || ''}</td>
+                <td>${f["Approval"] || ''}</td>
+            `;
+            tbody.appendChild(row);
+        });
+    })
+    .catch(error => console.error("Erro ao buscar dados:", error));
 });
