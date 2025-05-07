@@ -1,9 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Empresas - Airtable Live</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Empresas - Dados em Tempo Real</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,21 +11,17 @@
     <table id="empresas-table">
         <thead>
             <tr>
-                <th>Nome</th>
-                <th>Valuation (DCF)</th>
-                <th>Valuation (Múltiplos)</th>
-                <th>Receita Anual</th>
-                <th>Margem EBITDA (%)</th>
-                <th>Margem Líquida (%)</th>
-                <th>Crescimento Receita (%)</th>
-                <th>Churn (%)</th>
-                <th>Risco Estratégico</th>
+                <th>Empresa</th>
+                <th>Tipo de DD</th>
+                <th>Item Avaliado</th>
+                <th>Status</th>
+                <th>Risco (0-100)</th>
                 <th>Insight Estratégico</th>
                 <th>Rating</th>
                 <th>Approval</th>
             </tr>
         </thead>
-        <tbody></tbody>
+        <tbody id="table-body"></tbody>
     </table>
     <script src="script.js"></script>
 </body>
