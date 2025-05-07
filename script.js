@@ -8,6 +8,12 @@ document.getElementById("ddForm").addEventListener("submit", async function (e) 
   const status = document.getElementById("status").value;
   const risco = parseInt(document.getElementById("risco").value);
   const insight = parseInt(document.getElementById("insight").value);
+  const documento = document.getElementById("documento").value;
+
+  const rating = (risco + insight) / 2;
+  let approval = "Não Aprovado";
+  if (rating >= 80) approval = "Aprovado";
+  else if (rating >= 60) approval = "Em Avaliação";
 
   const data = {
     records: [
@@ -18,7 +24,11 @@ document.getElementById("ddForm").addEventListener("submit", async function (e) 
           Item: item,
           Status: status,
           Risco: risco,
-          "Insight Estratégico": insight
+          "Insight Estratégico": insight,
+          Rating: rating,
+          Approval: approval,
+          Documento: [{ url: documento }],
+          "Data de Registro": new Date().toISOString()
         }
       }
     ]
