@@ -1,33 +1,24 @@
-const tableBody = document.getElementById("table-body");
 
-const API_KEY = "keyXXXXXXXXXXXXXXXX";  // substitua com sua key real
-const BASE_ID = "appvccdvUXFaSh6lt";
-const TABLE_NAME = "Due Diligence";
+document.getElementById("dueForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const data = new FormData(e.target);
+    const jsonData = {};
+    data.forEach((value, key) => jsonData[key] = value);
 
-fetch(`https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}`, {
-    headers: {
-        Authorization: `Bearer ${API_KEY}`
-    }
-})
-.then(response => response.json())
-.then(data => {
-    const records = data.records;
-    records.forEach(record => {
-        const fields = record.fields;
-        const row = document.createElement("tr");
-        row.innerHTML = `
-            <td>${fields.Empresa || ""}</td>
-            <td>${fields["Tipo de DD"] || ""}</td>
-            <td>${fields["Item Avaliado"] || ""}</td>
-            <td>${fields.Status || ""}</td>
-            <td>${fields["Risco (0-100)"] || ""}</td>
-            <td>${fields["Insight Estratégico"] || ""}</td>
-            <td>${fields.Rating || ""}</td>
-            <td>${fields.Approval || ""}</td>
-        `;
-        tableBody.appendChild(row);
+    fetch("https://api.airtable.com/v0/appvccdvUXFaSh6lt/Due Diligence", {
+        method: "POST",
+        headers: {
+            "Authorization": "Bearer pat0R6DNyQDDP4fTv.05e3b1af7fc6dcc16dabcccaf9f0fdd45f3c5c5ade3c0bfbd2ded2b9e9b26362",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ fields: jsonData })
+    })
+    .then(response => {
+        if (!response.ok) throw new Error("Erro no cadastro");
+        alert("Cadastro realizado com sucesso!");
+        e.target.reset();
+    })
+    .catch(error => {
+        alert("Erro: " + error.message);
     });
-})
-.catch(error => {
-    console.error("Erro ao buscar dados:", error);
 });
