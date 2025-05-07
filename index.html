@@ -1,82 +1,31 @@
-
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Cadastro de Due Diligence</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        form {
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 500px;
-        }
-        h1 {
-            text-align: center;
-        }
-        label {
-            margin-top: 1rem;
-            display: block;
-        }
-        input, select, textarea {
-            width: 100%;
-            padding: 8px;
-            margin-top: 0.5rem;
-            box-sizing: border-box;
-        }
-        button {
-            margin-top: 1.5rem;
-            padding: 10px;
-            width: 100%;
-            background: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 1rem;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
-    <form id="dueForm">
+    <div class="container">
         <h1>Cadastro de Due Diligence</h1>
-        <label>Empresa</label>
-        <input type="text" name="Empresa" required>
-
-        <label>Tipo de Due Diligence</label>
-        <select name="Tipo de DD">
-            <option>Legal</option>
-            <option>Financeiro</option>
-            <option>Operacional</option>
-        </select>
-
-        <label>Item Avaliado</label>
-        <textarea name="Item Avaliado" rows="3" required></textarea>
-
-        <label>Status</label>
-        <select name="Status">
-            <option>Em Progresso</option>
-            <option>Concluído</option>
-        </select>
-
-        <label>Risco (0 a 100)</label>
-        <input type="number" name="Risco (0-100)" min="0" max="100" required>
-
-        <label>Insight Estratégico (0 a 100)</label>
-        <input type="number" name="Insight Estratégico" min="0" max="100" required>
-
-        <button type="submit">Cadastrar Item</button>
-    </form>
-
+        <form id="dueForm">
+            <input type="text" placeholder="Empresa" id="empresa" required />
+            <select id="tipoDd">
+                <option value="Legal">Legal</option>
+                <option value="Financeira">Financeira</option>
+            </select>
+            <textarea placeholder="Item Avaliado" id="itemAvaliado"></textarea>
+            <select id="status">
+                <option value="Em Progresso">Em Progresso</option>
+                <option value="Concluído">Concluído</option>
+            </select>
+            <input type="number" placeholder="Risco (0 a 100)" id="risco" min="0" max="100" />
+            <input type="number" placeholder="Insight Estratégico (0 a 100)" id="insight" min="0" max="100" />
+            <input type="file" id="documento" />
+            <button type="submit">Cadastrar Item</button>
+        </form>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
