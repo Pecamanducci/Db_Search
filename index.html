@@ -1,34 +1,60 @@
 
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cadastro de Due Diligence</title>
-  <link rel="stylesheet" href="style.css"/>
+    <meta charset="UTF-8">
+    <title>Due Diligence Inteligente</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="form-container">
-    <h1>Cadastro de Due Diligence</h1>
-    <form id="dueDiligenceForm">
-      <input type="text" id="empresa" placeholder="Empresa" required/>
-      <select id="tipoDD" required>
-        <option value="Legal">Legal</option>
-        <option value="Financeira">Financeira</option>
-        <option value="Operacional">Operacional</option>
-      </select>
-      <textarea id="itemAvaliado" placeholder="Item Avaliado" required></textarea>
-      <select id="status" required>
-        <option value="Em Progresso">Em Progresso</option>
-        <option value="Concluído">Concluído</option>
-        <option value="Pendente">Pendente</option>
-      </select>
-      <input type="number" id="risco" placeholder="Risco (0 a 100)" min="0" max="100" required/>
-      <input type="number" id="insight" placeholder="Insight Estratégico (0 a 100)" min="0" max="100" required/>
-      <input type="file" id="documento"/>
-      <button type="submit">Cadastrar Item</button>
+<div class="container">
+    <h1>Due Diligence Inteligente - Semana 5</h1>
+    <form id="cadastroForm">
+        <label>Empresa</label>
+        <input type="text" id="empresa" required placeholder="Nome da empresa">
+        <label>Tipo de Due Diligence</label>
+        <select id="tipo">
+            <option>Legal</option>
+            <option>Financeira</option>
+            <option>Operacional</option>
+            <option>Comercial</option>
+        </select>
+        <label>Item Avaliado</label>
+        <textarea id="item" placeholder="Descreva o item avaliado"></textarea>
+        <label>Status</label>
+        <select id="status">
+            <option>Em Progresso</option>
+            <option>Concluído</option>
+            <option>Pendente</option>
+        </select>
+        <label>Risco (0 a 100)</label>
+        <input type="number" id="risco" min="0" max="100" required>
+        <label>Insight Estratégico (0 a 100)</label>
+        <input type="number" id="insight" min="0" max="100" required>
+        <label>Upload de Documento</label>
+        <input type="file" id="documento">
+        <button type="submit">Cadastrar Item</button>
     </form>
-  </div>
-  <script src="script.js"></script>
+    <div class="actions">
+        <button id="exportBtn">Exportar Dados (CSV)</button>
+        <button id="promptBtn">Gerar Prompt Inteligente</button>
+    </div>
+    <h2>Itens Cadastrados</h2>
+    <table id="dadosTable">
+        <thead>
+            <tr>
+                <th>Empresa</th>
+                <th>Tipo DD</th>
+                <th>Item</th>
+                <th>Status</th>
+                <th>Risco</th>
+                <th>Insight</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <div id="promptOutput"></div>
+</div>
+<script src="script.js"></script>
 </body>
 </html>
