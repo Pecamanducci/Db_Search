@@ -38,6 +38,7 @@
     <div class="actions">
         <button id="exportBtn">Exportar Dados (CSV)</button>
         <button id="promptBtn">Gerar Prompt Inteligente</button>
+        <button id="analiseAIBtn" onClick="exibirRelatorioIA()">Relatorio de Analise de IA</button>
     </div>
     <h2>Itens Cadastrados</h2>
     <table id="dadosTable">
@@ -54,6 +55,8 @@
         <tbody></tbody>
     </table>
     <div id="promptOutput"></div>
+
+    <div id="analiseDiv" style="visibility:hidden"> ... </div>
 </div>
 <script src="script.js"></script>
 </body>
