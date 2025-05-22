@@ -1,87 +1,74 @@
 
 body {
-    background: #f8f8f8;
+    background: #f7f7f7;
     font-family: 'Segoe UI', Arial, sans-serif;
-    margin: 0;
-    padding: 0;
 }
 .container {
+    max-width: 420px;
+    margin: 40px auto;
     background: #fff;
-    max-width: 650px;
-    margin: 40px auto 0 auto;
-    border-radius: 18px;
-    box-shadow: 0 8px 32px #0002;
-    padding: 32px 36px;
+    border-radius: 14px;
+    box-shadow: 0 4px 24px rgba(30,64,175,0.09);
+    padding: 30px 32px;
 }
-h1 {
+h1, h2 {
     text-align: center;
-    font-size: 2.2rem;
-    margin-bottom: 22px;
+    margin-bottom: 18px;
 }
-form label {
-    display: block;
+label {
+    margin-top: 10px;
     font-weight: 500;
-    margin-top: 18px;
+    display: block;
 }
-input, select, textarea {
+input, select, textarea, button {
     width: 100%;
-    margin-top: 4px;
-    padding: 10px;
-    font-size: 1.02rem;
-    border: 1.2px solid #d1d5db;
-    border-radius: 7px;
-    box-sizing: border-box;
-    margin-bottom: 4px;
-    background: #fafbfc;
+    margin-bottom: 10px;
+    padding: 7px 10px;
+    border: 1px solid #dde0ee;
+    border-radius: 8px;
+    font-size: 1em;
 }
 input[type="file"] {
-    padding: 4px 0;
+    padding: 2px;
 }
 button {
-    margin-top: 18px;
-    width: 100%;
-    padding: 12px;
-    background: #0074f7;
+    background: #1877f2;
     color: #fff;
     font-weight: bold;
-    font-size: 1.09rem;
+    margin-top: 6px;
     border: none;
-    border-radius: 7px;
+    transition: 0.2s;
     cursor: pointer;
-    box-shadow: 0 1px 3px #0001;
-    transition: background .2s;
+    border-radius: 8px;
 }
 button:hover {
-    background: #0057b3;
+    background: #124da8;
 }
-.actions {
-    display: flex;
-    gap: 10px;
-    margin: 30px 0 18px 0;
-    justify-content: space-between;
+#iaResult {
+    margin: 8px 0 15px 0;
+    min-height: 30px;
+    font-size: 1em;
 }
-#dadosTable {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 8px;
+.rating-alto {
+    color: #24c355;
+    font-weight: bold;
 }
-#dadosTable th, #dadosTable td {
-    border: 1px solid #e0e0e0;
-    padding: 6px 9px;
-    text-align: left;
+.rating-medio {
+    color: #e6b800;
+    font-weight: bold;
 }
-#dadosTable th {
-    background: #0074f7;
-    color: #fff;
-    font-weight: 600;
+.rating-baixo {
+    color: #e94343;
+    font-weight: bold;
 }
-#promptOutput {
-    margin-top: 22px;
-    background: #eef6fd;
-    padding: 16px;
-    border-radius: 8px;
-    font-size: 1.06rem;
-    color: #0a3664;
-    box-shadow: 0 1px 5px #0001;
-    display: none;
+#historicoContainer {
+    margin-top: 30px;
+    background: #f5f7fb;
+    padding: 14px 14px 6px 14px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(90,100,150,0.07);
+}
+#historico {
+    font-size: 0.98em;
+    padding-left: 14px;
 }

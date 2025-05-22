@@ -1,134 +1,88 @@
 
-const form = document.getElementById('cadastroForm');
-const table = document.getElementById('dadosTable').querySelector('tbody');
-const promptBtn = document.getElementById('promptBtn');
-const exportBtn = document.getElementById('exportBtn');
-const promptOutput = document.getElementById('promptOutput');
+// Lógica simulada de avaliação IA
+function avaliarPorIA(form) {
+    // Simula prompt estruturado
+    const risco = Number(form.risco.value);
+    const insight = Number(form.insight.value);
 
-
-let dados = [
-    {
-        empresa: 'Agilysys',
-        tipo: 'Financeira',
-        item: 'Controle de receitas e margens',
-        status: 'Concluído',
-        risco: 15,
-        insight: 88
-    },
-    {
-        empresa: 'Alkami',
-        tipo: 'Operacional',
-        item: 'Pressão regulatória',
-        status: 'Em Progresso',
-        risco: 50,
-        insight: 78
-    },
-    {
-        empresa: 'CS Disco',
-        tipo: 'Legal',
-        item: 'Forte queima de caixa',
-        status: 'Pendente',
-        risco: 72,
-        insight: 67
+    let rating, explicacao, classe;
+    if (risco <= 30 && insight >= 65) {
+        rating = 'Alto';
+        explicacao = "A empresa apresenta risco controlado e bons insights estratégicos. Sinal verde para avanço.";
+        classe = 'rating-alto';
+    } else if (risco <= 70 && insight >= 40) {
+        rating = 'Médio';
+        explicacao = "A empresa apresenta risco moderado, mas potencial estratégico. Requer monitoramento.";
+        classe = 'rating-medio';
+    } else {
+        rating = 'Baixo';
+        explicacao = "A empresa está com alto risco e baixo insight. Atenção especial necessária!";
+        classe = 'rating-baixo';
     }
-];
 
-let url = "https://api.airtable.com/v0/appvccdvUXFaSh6lt/tblB2rXgUbs7VGk6t  ";
-let apiKey = "patLshvq2WnQd5p57.1869288e6a2e29a01f7d1bbe754eea7f506b311d0d1241d01be7b06318b83269";
-
-fetch(url, {
-    headers: {
-        Authorization: 'Bearer ' + apiKey
-    }
-})
-    .then(res => res.json())
-    .then(dadosFetch => {
-
-        console.log(dados);
-        renderTable()
-        renderAnalise(dadosFetch);
-    })
-    .catch(err => console.log(err));
-
-
-function renderTable() {
-    table.innerHTML = '';
-    for (let d of dados) {
-        table.innerHTML += `
-        <tr>
-            <td>${d.empresa}</td>
-            <td>${d.tipo}</td>
-            <td>${d.item}</td>
-            <td>${d.status}</td>
-            <td>${d.risco}</td>
-            <td>${d.insight}</td>
-        </tr>
-        `;
-    }
-}
-
-
-
-form.onsubmit = function (e) {
-    e.preventDefault();
-    let empresa = document.getElementById('empresa').value;
-    let tipo = document.getElementById('tipo').value;
-    let item = document.getElementById('item').value;
-    let status = document.getElementById('status').value;
-    let risco = document.getElementById('risco').value;
-    let insight = document.getElementById('insight').value;
-    // let documento = document.getElementById('documento').files[0]; // para integração futura
-
-    dados.push({ empresa, tipo, item, status, risco, insight });
-    renderTable();
-    form.reset();
-}
-
-exportBtn.onclick = function () {
-    // Exportar para CSV
-    let csv = "Empresa,Tipo DD,Item,Status,Risco,Insight\n";
-    dados.forEach(d => {
-        csv += `${d.empresa},${d.tipo},${d.item},${d.status},${d.risco},${d.insight}\n`;
-    });
-    let blob = new Blob([csv], { type: 'text/csv' });
-    let url = URL.createObjectURL(blob);
-    let a = document.createElement('a');
-    a.href = url;
-    a.download = 'due_diligence_export.csv';
-    a.click();
-    URL.revokeObjectURL(url);
-}
-
-promptBtn.onclick = function () {
-    let prompt = `PROMPT GERADO:\n
-                  Analise comparativamente as empresas Agilysys, Alkami e CS Disco considerando os seguintes dados:
-                    - Margens, risco, insight estratégico e status do Due Diligence cadastrado
-                    - Dados financeiros relevantes (exemplo simulado: EBITDA, receita, churn, etc.)
-
-                    Aponte qual empresa apresenta o melhor perfil para investimento no contexto de search funds. Justifique sua resposta de forma quantitativa e qualitativa, considerando o cenário macroeconômico e os riscos setoriais.
-
-                Base de dados (simulação):
-${dados.map(d => `${d.empresa} | Tipo: ${d.tipo} | Status: ${d.status} | Risco: ${d.risco} | Insight: ${d.insight}`).join('\n')}
-
-No final, indique: 1) Recomendação de investimento e 2) Estratégia para mitigar riscos.`;
-    promptOutput.style.display = "block";
-    promptOutput.innerText = prompt;
-}
-
-function renderAnalise(analiseIA) {
-    let analise = ``;
-
-    for (let d of analiseIA.records) {
-        const nome = d.fields['Name'];
-        const analiseIA = d.fields['AnaliseIA'];
-        analise += `<p> Empresa: ${nome} </p>
-                    <strong> ${analiseIA} </strong>
-                     <hr/> `;
+    return {
+        rating,
+        explicacao,
+        classe,
+        logica: `Se risco ≤ 30 e insight ≥ 65: Alto; risco ≤ 70 e insight ≥ 40: Médio; senão: Baixo.`
     };
-    document.getElementById("analiseDiv").innerHTML = analise;
 }
 
-function exibirRelatorioIA() {
-    console.log("exibir relatorio");
-    document.getElementById("analiseDiv").style = "visibility: visible";
-}
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('ddForm');
+    const iaResultDiv = document.getElementById('iaResult');
+    const analisarBtn = document.getElementById('analisarIA');
+    const historicoUl = document.getElementById('historico');
+    let historico = [];
+
+    analisarBtn.onclick = function() {
+        const resultado = avaliarPorIA(form);
+        iaResultDiv.innerHTML = `<span class="${resultado.classe}">Rating IA: ${resultado.rating}</span><br>
+            <small>${resultado.explicacao}</small><br>
+            <small><b>Lógica:</b> ${resultado.logica}</small>`;
+        form.dataset.ratingIa = resultado.rating;
+        form.dataset.ratingExplicacao = resultado.explicacao;
+        form.dataset.ratingLogica = resultado.logica;
+    };
+
+    form.onsubmit = function(e) {
+        e.preventDefault();
+        const empresa = form.empresa.value;
+        const tipoDD = form.tipoDD.value;
+        const item = form.item.value;
+        const status = form.status.value;
+        const risco = form.risco.value;
+        const insight = form.insight.value;
+        const rating = form.dataset.ratingIa || '-';
+        const explicacao = form.dataset.ratingExplicacao || '-';
+        const logica = form.dataset.ratingLogica || '-';
+        const data = new Date().toLocaleString();
+
+        historico.unshift({
+            data,
+            empresa, tipoDD, item, status, risco, insight,
+            rating, explicacao, logica
+        });
+
+        renderHistorico();
+
+        alert("Cadastro realizado com sucesso!");
+        form.reset();
+        iaResultDiv.innerHTML = "";
+        delete form.dataset.ratingIa;
+        delete form.dataset.ratingExplicacao;
+        delete form.dataset.ratingLogica;
+    };
+
+    function renderHistorico() {
+        historicoUl.innerHTML = '';
+        historico.forEach(h => {
+            historicoUl.innerHTML += `<li>
+                <b>${h.data}</b> | <b>${h.empresa}</b> (${h.tipoDD}) — <span class="rating-${h.rating.toLowerCase()}">Rating: ${h.rating}</span>
+                <br>Risco: <b>${h.risco}</b>, Insight: <b>${h.insight}</b> <br>
+                <i>${h.explicacao}</i>
+                <br><small>Lógica usada: ${h.logica}</small>
+                <hr></li>`;
+        });
+    }
+});
