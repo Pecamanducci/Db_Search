@@ -1,0 +1,86 @@
+body {
+    background: #f8f8f8;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    background: #fff;
+    max-width: 750px;
+    margin: 40px auto 0 auto;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px #0002;
+    padding: 32px 36px;
+}
+h1 {
+    text-align: center;
+    font-size: 2.2rem;
+    margin-bottom: 22px;
+}
+form label {
+    display: block;
+    font-weight: 500;
+    margin-top: 18px;
+}
+input, select, textarea {
+    width: 100%;
+    margin-top: 4px;
+    padding: 10px;
+    font-size: 1.02rem;
+    border: 1.2px solid #d1d5db;
+    border-radius: 7px;
+    box-sizing: border-box;
+    margin-bottom: 4px;
+    background: #fafbfc;
+}
+input[type="file"] {
+    padding: 4px 0;
+}
+button {
+    margin-top: 18px;
+    width: 100%;
+    padding: 12px;
+    background: #0074f7;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.09rem;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    box-shadow: 0 1px 3px #0001;
+    transition: background .2s;
+}
+button:hover {
+    background: #0057b3;
+}
+.actions {
+    display: flex;
+    gap: 10px;
+    margin: 30px 0 18px 0;
+    justify-content: space-between;
+}
+#dadosTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+}
+#dadosTable th, #dadosTable td {
+    border: 1px solid #e0e0e0;
+    padding: 6px 9px;
+    text-align: left;
+}
+#dadosTable th {
+    background: #0074f7;
+    color: #fff;
+    font-weight: 600;
+}
+#promptOutput {
+    margin-top: 22px;
+    background: #eef6fd;
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 1.06rem;
+    color: #0a3664;
+    box-shadow: 0 1px 5px #0001;
+    display: none;
+}
